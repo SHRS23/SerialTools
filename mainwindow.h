@@ -29,6 +29,9 @@ private:
     void searchPorts(void);
     void fillPortToCmb(QComboBox *cmb = nullptr);
     void fillBaudToCmb(QComboBox *cmb = nullptr);
+    void fillDataBitsToCmb(QComboBox *cmb = nullptr);
+    void fillStopBitsToCmb(QComboBox *cmb = nullptr);
+    void fillParityToCmb(QComboBox *cmb = nullptr);
     QByteArray convertStringToHex(QString str);
 
 private slots:

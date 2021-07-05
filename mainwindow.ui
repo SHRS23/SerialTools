@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>390</height>
+    <width>804</width>
+    <height>535</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -17,23 +23,90 @@
    <widget class="QGroupBox" name="grp_cfg">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>600</x>
       <y>0</y>
-      <width>100</width>
-      <height>350</height>
+      <width>201</width>
+      <height>511</height>
      </rect>
     </property>
     <property name="title">
      <string/>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QComboBox" name="cmb_port"/>
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>端口:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmb_port"/>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QComboBox" name="cmb_baud"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,5">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>波特率:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmb_baud"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,5">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>数据位:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmb_databits"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="2,5">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>停止位:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmb_stopbits"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,5">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>校验位:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmb_parity"/>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QPushButton" name="btn_search">
@@ -113,8 +186,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>500</width>
-      <height>280</height>
+      <width>601</width>
+      <height>431</height>
      </rect>
     </property>
     <property name="title">
@@ -134,9 +207,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>280</y>
-      <width>500</width>
-      <height>70</height>
+      <y>429</y>
+      <width>601</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="title">
@@ -145,20 +218,20 @@
     <widget class="QPlainTextEdit" name="txt_tx">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>400</width>
-       <height>50</height>
+       <x>14</x>
+       <y>17</y>
+       <width>521</width>
+       <height>51</height>
       </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_send">
      <property name="geometry">
       <rect>
-       <x>415</x>
-       <y>10</y>
-       <width>75</width>
-       <height>50</height>
+       <x>542</x>
+       <y>17</y>
+       <width>51</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="text">
@@ -172,12 +245,23 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
-     <height>23</height>
+     <width>804</width>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>TDB</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>TDB</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
