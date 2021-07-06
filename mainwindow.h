@@ -20,12 +20,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public:
+    static int tx_cnt;
+    static int rx_cnt;
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *serialport;
+    enum SerialPortStatus{open = 1, close = 0};
 
 private:
     void initConnections(void);
+    void updateUi(SerialPortStatus status);
     void searchPorts(void);
     void fillPortToCmb(QComboBox *cmb = nullptr);
     void fillBaudToCmb(QComboBox *cmb = nullptr);
@@ -39,6 +45,6 @@ private slots:
     void closePort(void);
     void rxData(void);
     void txData(void);
-
+    void clearCnt(void);
 };
 #endif // MAINWINDOW_H

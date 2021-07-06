@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+int MainWindow::tx_cnt = 0;
+int MainWindow::rx_cnt = 0;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -32,6 +35,15 @@ void MainWindow::initConnections()
     connect(ui->btn_send, &QPushButton::clicked, this, &MainWindow::txData);
     connect(ui->btn_clr_rx, &QPushButton::clicked, ui->txt_rx, &QPlainTextEdit::clear);
     connect(ui->btn_clr_tx, &QPushButton::clicked, ui->txt_tx, &QPlainTextEdit::clear);
+    connect(ui->btn_clr_cnt, &QPushButton::clicked, this, &MainWindow::clearCnt);
+}
+
+void MainWindow::clearCnt(void)
+{
+    ui->lab_rx_cnt->setText("Rx : 0 Bytes");
+    ui->lab_tx_cnt->setText("Tx : 0 Bytes");
+    tx_cnt = 0;
+    rx_cnt = 0;
 }
 
 void MainWindow::searchPorts(void)
@@ -80,8 +92,6 @@ void MainWindow::fillDataBitsToCmb(QComboBox *cmb)
     cmb->addItem(QStringLiteral("7"), QSerialPort::Data7);
     cmb->addItem(QStringLiteral("8"), QSerialPort::Data8);
     cmb->setCurrentIndex(3);
-
-
 }
 void MainWindow::fillStopBitsToCmb(QComboBox *cmb)
 {
@@ -91,7 +101,6 @@ void MainWindow::fillStopBitsToCmb(QComboBox *cmb)
     cmb->addItem("1.5", QSerialPort::OneAndHalfStop);
 #endif
     cmb->addItem(QStringLiteral("2"), QSerialPort::TwoStop);
-
     cmb->setCurrentIndex(0);
 }
 void MainWindow::fillParityToCmb(QComboBox *cmb)
@@ -128,12 +137,7 @@ void MainWindow::openPort()
         /* connect serial port signal and slot */
         connect(serialport, &QSerialPort::readyRead, this, &MainWindow::rxData);
         /* update ui */
-        ui->cmb_port->setEnabled(false);
-        ui->cmb_baud->setEnabled(false);
-        ui->cmb_databits->setEnabled(false);
-        ui->cmb_stopbits->setEnabled(false);
-        ui->cmb_parity->setEnabled(false);
-        ui->btn_send->setEnabled(true);
+        updateUi(open);
         qDebug("open success");
     }
     else
@@ -150,12 +154,8 @@ void MainWindow::closePort()
     {
         serialport->close();
         /* update ui */
-        ui->cmb_port->setEnabled(true);
-        ui->cmb_baud->setEnabled(true);
-        ui->cmb_databits->setEnabled(true);
-        ui->cmb_stopbits->setEnabled(true);
-        ui->cmb_parity->setEnabled(true);
-        ui->btn_send->setEnabled(false);
+        updateUi(close);
+        qDebug("close success");
     }
 }
 
@@ -163,6 +163,7 @@ void MainWindow::rxData()
 {
     const QByteArray data = serialport->readAll();
 
+    qDebug("rx data length : %d", data.length());
     if(ui->ckb_hex_rx->isChecked())
     {
         ui->txt_rx->insertPlainText(QString(data.toHex(' ').toUpper() + ' '));
@@ -172,6 +173,11 @@ void MainWindow::rxData()
         // ui->txt_rx->appendPlainText(QString(data)); // will start a newline
         ui->txt_rx->insertPlainText(QString(data));
     }
+
+    /* update rx count */
+    rx_cnt += data.length();
+    /* update rx count lable */
+    ui->lab_rx_cnt->setText("Rx : " + QString::number(rx_cnt) + " Bytes");
 }
 
 QByteArray MainWindow::convertStringToHex(QString str)
@@ -204,6 +210,7 @@ void MainWindow::txData()
     QString str = ui->txt_tx->toPlainText();
     QByteArray data = QByteArray();
 
+    qDebug("tx data length : %d", data.length());
     if(ui->ckb_hex_tx->isChecked())
     {
         data = convertStringToHex(str);
@@ -213,11 +220,54 @@ void MainWindow::txData()
         data = str.toUtf8();
     }
 
+    /* update tx count */
+    tx_cnt += data.length();
+
     if(ui->ckb_newline->isChecked())
     {
         data.append(0x0D);
         data.append(0x0A);
+        tx_cnt += 2;
     }
 
+    /* update tx count lable */
+    ui->lab_tx_cnt->setText("Tx : " + QString::number(tx_cnt) + " Bytes");
+    /* write data to serial port */
     serialport->write(data);
+}
+
+void MainWindow::updateUi(SerialPortStatus status)
+{
+    if(status == close)
+    {
+        ui->cmb_port->setEnabled(true);
+        ui->cmb_baud->setEnabled(true);
+        ui->cmb_databits->setEnabled(true);
+        ui->cmb_stopbits->setEnabled(true);
+        ui->cmb_parity->setEnabled(true);
+        ui->btn_send->setEnabled(false);
+        ui->btn_open->setEnabled(true);
+        ui->btn_close->setEnabled(false);
+        ui->btn_search->setEnabled(true);
+        ui->lab_status->setText(serialport->portName() + " is closed.");
+    }
+    else if(status == open)
+    {
+        ui->cmb_port->setEnabled(false);
+        ui->cmb_baud->setEnabled(false);
+        ui->cmb_databits->setEnabled(false);
+        ui->cmb_stopbits->setEnabled(false);
+        ui->cmb_parity->setEnabled(false);
+        ui->btn_send->setEnabled(true);
+        ui->btn_open->setEnabled(false);
+        ui->btn_close->setEnabled(true);
+        ui->btn_search->setEnabled(false);
+        ui->lab_status->setText(serialport->portName() + " is opened.");
+    }
+    else
+    {
+        qDebug("Wrong serial status");
+        ui->lab_status->setText("Wrong");
+        return;
+    }
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>804</width>
-    <height>535</height>
+    <width>802</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -26,7 +26,7 @@
       <x>600</x>
       <y>0</y>
       <width>201</width>
-      <height>511</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="title">
@@ -38,7 +38,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="lab_port">
            <property name="text">
             <string>端口:</string>
            </property>
@@ -52,7 +52,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,5">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="lab_baud">
            <property name="text">
             <string>波特率:</string>
            </property>
@@ -66,7 +66,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,5">
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="lab_databits">
            <property name="text">
             <string>数据位:</string>
            </property>
@@ -80,7 +80,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="2,5">
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="lab_stopbits">
            <property name="text">
             <string>停止位:</string>
            </property>
@@ -97,7 +97,7 @@
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="lab_parity">
            <property name="text">
             <string>校验位:</string>
            </property>
@@ -187,57 +187,122 @@
       <x>0</x>
       <y>0</y>
       <width>601</width>
-      <height>431</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="title">
      <string/>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QPlainTextEdit" name="txt_rx">
-       <property name="undoRedoEnabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>13</y>
+       <width>581</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="9,1" columnstretch="9,1">
+      <item row="1" column="0">
+       <widget class="QPlainTextEdit" name="txt_tx"/>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QPlainTextEdit" name="txt_rx">
+        <property name="undoRedoEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="btn_send">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>发送</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <widget class="QGroupBox" name="grp_tx">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>429</y>
-      <width>601</width>
-      <height>81</height>
+      <y>480</y>
+      <width>801</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="title">
      <string/>
     </property>
-    <widget class="QPlainTextEdit" name="txt_tx">
-     <property name="geometry">
-      <rect>
-       <x>14</x>
-       <y>17</y>
-       <width>521</width>
-       <height>51</height>
-      </rect>
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <property name="spacing">
+      <number>3</number>
      </property>
-    </widget>
-    <widget class="QPushButton" name="btn_send">
-     <property name="geometry">
-      <rect>
-       <x>542</x>
-       <y>17</y>
-       <width>51</width>
-       <height>51</height>
-      </rect>
+     <property name="leftMargin">
+      <number>3</number>
      </property>
-     <property name="text">
-      <string>发送</string>
+     <property name="topMargin">
+      <number>3</number>
      </property>
-    </widget>
+     <property name="rightMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,14,3,3,1">
+       <item>
+        <widget class="QLabel" name="lab_status_string">
+         <property name="text">
+          <string>Status :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lab_status">
+         <property name="text">
+          <string>Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lab_tx_cnt">
+         <property name="text">
+          <string>Tx : 0 Bytes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lab_rx_cnt">
+         <property name="text">
+          <string>Rx : 0 Bytes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_clr_cnt">
+         <property name="text">
+          <string>清除计数</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -245,8 +310,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>804</width>
-     <height>22</height>
+     <width>802</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
