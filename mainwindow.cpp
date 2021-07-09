@@ -210,7 +210,6 @@ void MainWindow::txData()
     QString str = ui->txt_tx->toPlainText();
     QByteArray data = QByteArray();
 
-    qDebug("tx data length : %d", data.length());
     if(ui->ckb_hex_tx->isChecked())
     {
         data = convertStringToHex(str);
@@ -230,6 +229,7 @@ void MainWindow::txData()
         tx_cnt += 2;
     }
 
+    qDebug("tx data length : %d", data.length());
     /* update tx count lable */
     ui->lab_tx_cnt->setText("Tx : " + QString::number(tx_cnt) + " Bytes");
     /* write data to serial port */
