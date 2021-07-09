@@ -224,7 +224,10 @@ void MainWindow::txData()
 
     if(ui->ckb_newline->isChecked())
     {
+        // data.append('\n'); // May be applicable to both Windows and Linux, need to be confirmed
+#ifdef Q_OS_WIN
         data.append(0x0D);
+#endif
         data.append(0x0A);
         tx_cnt += 2;
     }
